@@ -1,4 +1,4 @@
-<small>
+<pre>
 # NulleX_NAV_Masternode_status_report
 #
 # Creator: Eddy Erkel
@@ -71,4 +71,4 @@ NulleX balance unchanged since check at 2018-10-23 17:00:04.
 Warnings: 0
 Errors  : 0
 
-</small>
+</pre>

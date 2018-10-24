@@ -357,6 +357,7 @@ f_check_diskspace () {
 }
 
 f_verify_diskspace () {
+    f_disphead "Verify Masternode server disk space"
 	if [ "$diskspace_excludelist" != "" ] ; then
 		df -H | grep -vE "^Filesystem|tmpfs|cdrom|${diskspace_excludelist}" | awk '{print $5 " " $6}' | f_check_diskspace
 		local disk_warnings=$?
@@ -365,6 +366,11 @@ f_verify_diskspace () {
 		local disk_warnings=$?
 	fi
 	let warnings+=$disk_warnings
+    if [ "$warnings" -eq 0 ]; then
+		f_dispnorm "NulleX masternode server disk space is OK."
+    fi	
+	
+	f_dispfoot
 }
 
 

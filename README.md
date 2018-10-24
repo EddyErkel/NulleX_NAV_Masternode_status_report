@@ -67,6 +67,9 @@ Previous balance: 50614
 Current balance : 50614
 NulleX balance unchanged since check at 2018-10-23 17:00:04.
 
+---------------- Verify Masternode server disk space -----------------
+NulleX masternode server disk space is OK.
+
 ------------------------------ Summary -------------------------------
 Warnings: 0
 Errors  : 0

@@ -137,16 +137,6 @@ f_disperr ()
     echo "$1" >> $script_mail
 }
 
-f_alertset ()
-{ 
-    echo "$1" >> $alertFile                         # Write to file
-}
-
-f_alertclr ()
-{
-    rm -f $alertFile                                # Delete file
-}
-
 
 ###################################################################################################
 # Start mailbody
@@ -451,11 +441,11 @@ f_write_logfile ()
 ###################################################################################################
 f_send_email ()
 {
-    if [ "$warnings" -gt 0 -o "$errors" -gt 0 ]; then # Sent email on warnings and errors
-#    if [ "$errors" -gt 0 ]; then		      # Sent email on errors
+    if [ "$warnings" -gt 0 -o "$errors" -gt 0 ]; then   # Sent email on warnings and errors
+#   if [ "$errors" -gt 0 ]; then		                # Sent email on errors
         echo "Sending '$mailsubject' to $mailto"
         $ssmtp $mailto < $script_mail
-    #	ssmtp $mailto -vvv < $script_mail	# Verbose ssmtp output
+#   	ssmtp $mailto -vvv < $script_mail	# Verbose ssmtp output
     fi
 
     f_dispfoot 

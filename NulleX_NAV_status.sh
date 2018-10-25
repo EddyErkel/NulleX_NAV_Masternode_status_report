@@ -106,45 +106,45 @@ f_disphead ()
         printf "%${n_fill}s\n" | tr ' ' $filler >> $script_mail
     fi
 
-	echo -en "\e[0m"                                # Restore default color
+    echo -en "\e[0m"                                # Restore default color
 }
 
 f_dispfoot ()
 {
     echo ""
-	echo "" >> $script_mail
+    echo "" >> $script_mail
 }
 
 f_dispnorm ()
 {
-	echo -e "\e[39m$1\e[0m"	                        # Default text to screen
-	echo "$1" >> $script_mail
+    echo -e "\e[39m$1\e[0m"	                        # Default text to screen
+    echo "$1" >> $script_mail
 }
 
 f_dispwarn ()
 {
-	let warnings+=1
+    let warnings+=1
     echo -e "\e[93m$1\e[0m"                         # Yellow text to screen
-#	echo -e "\e[38;5;202m$1\e[0m"                   # Orange text to screen
-#	echo -e "\e[38;5;172m$1\e[0m"                   # Orange text to screen
-	echo "$1" >> $script_mail
+#   echo -e "\e[38;5;202m$1\e[0m"                   # Orange text to screen
+#   echo -e "\e[38;5;172m$1\e[0m"                   # Orange text to screen
+    echo "$1" >> $script_mail
 }
 
 f_disperr ()
 {
-	let errors+=1
-	echo -e "\e[91m$1\e[0m"	                        # Red text to screen
-	echo "$1" >> $script_mail
+    let errors+=1
+    echo -e "\e[91m$1\e[0m"	                        # Red text to screen
+    echo "$1" >> $script_mail
 }
 
 f_alertset ()
 { 
-	echo "$1" >> $alertFile                         # Write to file
+    echo "$1" >> $alertFile                         # Write to file
 }
 
 f_alertclr ()
 {
-	rm -f $alertFile                                # Delete file
+    rm -f $alertFile                                # Delete file
 }
 
 
@@ -178,7 +178,7 @@ if ! [ -e $pidfile ] ; then f_disperr "File not found: $pidfile" ; exit; fi
 # Verify masternode status
 ###################################################################################################
 f_verify_masternode_status () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify NulleX masternode status"
     $nullexcli masternode status | grep message | sed -e "s/^  \"message\": //" 2>&1 | tee -a $script_mail
     masternodestatus=$($nullexcli masternode status | grep status | sed -e "s/^  \"status\": //" -e "s/,//")
@@ -199,7 +199,7 @@ f_verify_masternode_status () {
 # Verify block count
 ###################################################################################################
 f_verify_block_count () {
-	let checks+=1
+    let checks+=1
     f_disphead  "Verify NulleX block count"
 
     # Get block count at explorer.nullex.io
@@ -231,7 +231,7 @@ f_verify_block_count () {
 # Verify balance
 ###################################################################################################
 f_verify_balance () {
-	let checks+=1
+    let checks+=1
     # Create old file for testing:  touch -t YYYYMMDDhhmm.ss <filename>
     f_disphead "Verify NulleX balance at explorer.nullex.io"
     hash=$($nullexcli masternode status | grep "  \"addr\"" | sed -e "s/^  \"addr\": \"//" -e "s/\",//")
@@ -271,7 +271,7 @@ f_verify_balance () {
 # Verify installer version
 ###################################################################################################
 f_verify_installer_version () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify NulleX installer version"
 
     installerversion=$(wget -qO- $installfilegithub | grep '# Version:' | sed -e "s/^# Version: v//")
@@ -296,7 +296,7 @@ f_verify_installer_version () {
 # Verify wallet version
 ###################################################################################################
 f_verify_wallet_version () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify NulleX wallet version"
     latestwalletversion=$(wget -qO- $installfilegithub | grep '^WALLET_VERSION=\"' | sed -e "s/^WALLET_VERSION=\"//" -e "s/\"//")
     f_dispnorm "Github wallet version: $latestwalletversion"
@@ -320,7 +320,7 @@ f_verify_wallet_version () {
 # Verify process ID
 ###################################################################################################
 f_verify_process_id () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify NulleX process ID"
 
     # pidfile=./test                                      # Unhash for script testing
@@ -340,7 +340,7 @@ f_verify_process_id () {
 # Verify number of running Nullex processes
 ###################################################################################################
 f_verify_nullex_processes () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify number of running NulleX processes"
     processcount=$(ps -ef | grep nullexd | grep -v grep | wc -l)
     ps -ef | egrep 'PID|nullexd' | grep -v grep
@@ -362,34 +362,34 @@ f_verify_nullex_processes () {
 # Verify NulleX masternode server disk space
 ###################################################################################################
 f_check_diskspace () {
-	let checks+=1
-	while read output;
-		do
-		  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
-		  partition=$(echo $output | awk '{print $2}')
-		  if [ $usep -ge $diskspace_alert ] ; then
-			f_dispwarn "Running out of space for \"$partition ($usep%)\""
-		  fi
-		done
-	return $warnings
+    let checks+=1
+    while read output;
+        do
+            usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
+            partition=$(echo $output | awk '{print $2}')
+            if [ $usep -ge $diskspace_alert ] ; then
+                f_dispwarn "Running out of space for \"$partition ($usep%)\""
+            fi
+        done
+    return $warnings
 }
 
 f_verify_diskspace () {
-	let checks+=1
+    let checks+=1
     f_disphead "Verify NulleX masternode server disk space"
-	if [ "$diskspace_excludelist" != "" ] ; then
-		df -H | grep -vE "^Filesystem|tmpfs|cdrom|${diskspace_excludelist}" | awk '{print $5 " " $6}' | f_check_diskspace
-		local disk_warnings=$?
-	else
-		df -H | grep -vE "^Filesystem|tmpfs|cdrom" | awk '{print $5 " " $6}' | f_check_diskspace
-		local disk_warnings=$?
-	fi
-	let warnings+=$disk_warnings
+    if [ "$diskspace_excludelist" != "" ] ; then
+        df -H | grep -vE "^Filesystem|tmpfs|cdrom|${diskspace_excludelist}" | awk '{print $5 " " $6}' | f_check_diskspace
+        local disk_warnings=$?
+    else
+        df -H | grep -vE "^Filesystem|tmpfs|cdrom" | awk '{print $5 " " $6}' | f_check_diskspace
+        local disk_warnings=$?
+    fi
+    let warnings+=$disk_warnings
     if [ "$warnings" -eq 0 ]; then
-		f_dispnorm "NulleX masternode server disk space is OK."
+        f_dispnorm "NulleX masternode server disk space is OK."
     fi	
 	
-	f_dispfoot
+    f_dispfoot
 }
 
 
@@ -397,28 +397,28 @@ f_verify_diskspace () {
 # Verify NulleX masternode port connection
 ###################################################################################################
 f_check_port () {
-	let checks+=1
-	f_disphead "Verify NulleX masternode port connection"
-	/bin/netstat -l | egrep -w "$masternodeport|Local Address" >> $script_mail
-	/bin/netstat -l | grep -w "Local Address"
-	/bin/netstat -l | grep -w "$masternodeport"
-	if [ "$?" -ne 0 ]; then
-		f_dispwarn "NulleX masternode is not listening on port $masternodeport."
-	else
-		f_dispnorm "NulleX masternode is listening on port $masternodeport."
-	fi
-	echo "" 2>&1 | tee -a $script_mail
-	publicip=$(/usr/bin/wget -q -O - checkip.dyn.com|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
-	#publicip=$(/usr/bin/curl -s ident.me)
-	f_dispnorm "NulleX masternode external IP-address: $publicip"
-	/bin/nc -z -v -w2 $publicip $masternodeport 2>&1 | tee -a $script_mail
-	if [ "$?" -ne 0 ]; then
-		f_disperr "Connection to $publicip on port $masternodeport failed."
-	else
-		f_dispnorm "Connection to $publicip on port $masternodeport succeeded."
-	fi
+    let checks+=1
+    f_disphead "Verify NulleX masternode port connection"
+    /bin/netstat -l | egrep -w "$masternodeport|Local Address" >> $script_mail
+    /bin/netstat -l | grep -w "Local Address"
+    /bin/netstat -l | grep -w "$masternodeport"
+    if [ "$?" -ne 0 ]; then
+        f_dispwarn "NulleX masternode is not listening on port $masternodeport."
+    else
+        f_dispnorm "NulleX masternode is listening on port $masternodeport."
+    fi
+    echo "" 2>&1 | tee -a $script_mail
+    publicip=$(/usr/bin/wget -q -O - checkip.dyn.com|sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+    #publicip=$(/usr/bin/curl -s ident.me)
+    f_dispnorm "NulleX masternode external IP-address: $publicip"
+    /bin/nc -z -v -w2 $publicip $masternodeport 2>&1 | tee -a $script_mail
+    if [ "$?" -ne 0 ]; then
+        f_disperr "Connection to $publicip on port $masternodeport failed."
+    else
+        f_dispnorm "Connection to $publicip on port $masternodeport succeeded."
+    fi
 
-	f_dispfoot
+    f_dispfoot
 }
 
 
@@ -428,13 +428,12 @@ f_check_port () {
 f_display_summary ()
 {
     f_disphead "Summary"
-	f_dispnorm "Checks  : $checks"
+    f_dispnorm "Checks  : $checks"
     f_dispnorm "Warnings: $warnings"
     f_dispnorm "Errors  : $errors"
 	
-	echo -e "\e[92m----------------------------------------------------------------------------\e[0m"
+    echo -e "\e[92m----------------------------------------------------------------------------\e[0m"
     f_dispfoot
-
 }
 
     

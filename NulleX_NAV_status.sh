@@ -15,7 +15,7 @@
 # - Verify number of running NulleX processes
 # - Verify NulleX masternode server disk space
 # - Verify NulleX masternode port connection
-# - Send an email when an warning or error has been raised
+# - Send an email when a warning or error has been raised
 #
 #
 # For more info about NulleX please go to https://nullex.io/

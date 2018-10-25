@@ -35,6 +35,10 @@
 #
 # Verify functions can be enabled, disabled and reordered at the bottom of this script
 #
+#
+# Remark:
+# This script was developed and tested on a Ubuntu 16.04.5 LTS server with an IP-v4 IP-address
+#
 ####################################################################################################
 
 

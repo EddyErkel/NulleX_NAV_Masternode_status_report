@@ -53,10 +53,10 @@ installfilegithub=https://raw.githubusercontent.com/NLXionaire/nullex-nav-instal
 installfilelocal=~/nullex/nullex-nav-installer.sh   # Local NulleX NAV installation file which was used during set-up
 nullexcli=/usr/local/bin/NulleX/nullex-cli          # nullex-cli path
 pidfile=~/.nullexqt/NulleXd.pid                     # NulleX daemon process id file
-masternodeport=43879								# Port used by NulleX masternode
+masternodeport=43879                                # Port used by NulleX masternode
 processes=1                                         # Expected number of running nullexd processes
-diskspace_alert=90									# set alert level 90% is default
-# diskspace_excludelist="/dev/hdd1|/dev/hdc5"		# Exclude list of unwanted disk space monitoring, use "|" to separate the partitions. Not enabled by default.
+diskspace_alert=90                                  # set alert level 90% is default
+# diskspace_excludelist="/dev/hdd1|/dev/hdc5"       # Exclude list of unwanted disk space monitoring, use "|" to separate the partitions. Not enabled by default.
 
 
 ###################################################################################################
@@ -74,7 +74,7 @@ date_time="`date +%Y-%m-%d\ %H:%M:%S`"              # Set date variable
 ssmtp=/usr/sbin/ssmtp                               # ssmtp path
 warnings=0                                          # Set warnings to 0
 errors=0                                            # Set errros to 0
-checks=0											# Set checks to 0
+checks=0                                            # Set checks to 0
 
 
 ###################################################################################################

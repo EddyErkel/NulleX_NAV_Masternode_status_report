@@ -1,8 +1,15 @@
 #!/bin/bash
 #
 # Creator: Eddy Erkel
-# Version: v0.4
-# Date:    October 25, 2018
+# Version: v0.5
+# Date:    October 26, 2018
+#
+# Grateful for my work and in a generous mood?
+# NLX: AFzKkRf5oe1PkDdTvB41xc8BMXckNx1RAq
+# BTC: 18JNWyGhfAmhkWs7jzuuHn54jEZRPj81Jx
+# ETH: 0x067e8b995f7dbaf32081bc32927f6fac29b32055
+# LTC: LLqwyRiKiuvxkx76grFmbxEeoChLnxvaKH
+#
 #
 # This script can be used to check you NulleX NAV Masternode status
 # This script will:

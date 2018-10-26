@@ -5,6 +5,12 @@
 # Version: v0.5
 # Date:    October 26, 2018
 #
+# Disclamer:
+# This script is provided "as is", without warranty of any kind.
+# Use it at your own risk. I assume no liability for damages,
+# direct or consequential, that may result from the use of this script.
+#
+#
 # Grateful for my work and in a generous mood?
 # NLX: AFzKkRf5oe1PkDdTvB41xc8BMXckNx1RAq
 # BTC: 18JNWyGhfAmhkWs7jzuuHn54jEZRPj81Jx
